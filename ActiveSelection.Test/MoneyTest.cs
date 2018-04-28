@@ -54,6 +54,17 @@ namespace ActiveSelection.Test
         }
 
         [Fact]
+        public void TestMoneyDivision()
+        {
+            var x = 15.Rubles();
+            var y = 5.Rubles();
+
+            var div = x / y;
+
+            Assert.Equal(3.0M, div);
+        }
+
+        [Fact]
         public void TestAddition()
         {
             var x = 15.Rubles();

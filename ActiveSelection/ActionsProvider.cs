@@ -27,6 +27,12 @@ namespace ActiveSelection
 
             var portfolioCost = portfolio.Cost(pricesMap);
 
+            while (allocation.Portions.Count > 0)
+            {
+                var assetSize = allocation.GetAssetWithSmallestReminder(portfolioCost, pricesMap);
+                allocation = allocation.Remove(assetSize.Ticker);
+            }
+
             return null;
         }
     }

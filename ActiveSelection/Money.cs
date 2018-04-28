@@ -59,6 +59,13 @@ namespace ActiveSelection
             return new Money(money.Value / div, money.Currency);
         }
 
+        public static decimal operator/ (Money x, Money y)
+        {
+            var newYValue = CurrencyConverter.Convert(y.Value).From(y.Currency).To(x.Currency);
+            
+            return x.Value / newYValue;
+        }
+
         public static Money operator+ (Money x, Money y)
         {
             var newYValue = CurrencyConverter.Convert(y.Value).From(y.Currency).To(x.Currency);

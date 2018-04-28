@@ -12,6 +12,12 @@ namespace ActiveSelection
             Assets = assets ?? throw new ArgumentNullException(nameof(assets));
         }
 
+        public Portfolio(Money cash, params Asset[] assets)
+        {
+            Cash = cash ?? throw new ArgumentNullException(nameof(cash));
+            Assets = assets ?? throw new ArgumentNullException(nameof(assets));
+        }
+
         public Money Cash { get; }
 
         public IReadOnlyList<Asset> Assets { get; }
