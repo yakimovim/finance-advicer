@@ -18,6 +18,8 @@ namespace ActiveSelection
             Portions = portions ?? throw new ArgumentNullException(nameof(portions));
             if(Portions.Count > 0 && Portions.Select(p => p.Portion).Sum() != 1.0M)
                 throw new ArgumentException("Sum of all portions must be 1.");
+            if(Portions.Count > 0 && Portions.Select(p => p.Ticker).Distinct().Count() != Portions.Count)
+                throw new ArgumentException("All tickers must be different.");
         }
 
         public IReadOnlyList<AssetPortion> Portions { get; }
@@ -48,24 +50,6 @@ namespace ActiveSelection
         {
             yield return Ticker;
             yield return Portion;
-        }
-    }
-
-    public class AssetSize : ValueObject
-    {
-        public AssetSize(string ticker, int size)
-        {
-            Ticker = ticker ?? throw new ArgumentNullException(nameof(ticker));
-            Size = size;
-        }
-
-        public string Ticker { get; }
-        public int Size { get; }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Ticker;
-            yield return Size;
         }
     }
 

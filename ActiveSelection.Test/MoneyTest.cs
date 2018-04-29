@@ -1,5 +1,4 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 
 namespace ActiveSelection.Test
 {
@@ -9,8 +8,8 @@ namespace ActiveSelection.Test
     {
         public MoneyTest()
         {
-            CurrencyConverter.ConvertionRates.Clear();
-            CurrencyConverter.ConvertionRates[Tuple.Create(Dollars, Rubles)] = 60.0M;
+            CurrencyConverter.ClearRates();
+            CurrencyConverter.One(Dollars).Costs(60.Rubles());
         }
 
         [Fact]
@@ -97,6 +96,16 @@ namespace ActiveSelection.Test
 
             Assert.Equal(300M, rubles.Value);
             Assert.Equal(Rubles, rubles.Currency);
+        }
+
+        [Fact]
+        public void TestComparison()
+        {
+            var x = 5.Dollars();
+            var y = 5.Rubles();
+
+            Assert.True(y < x);
+            Assert.True(x > y);
         }
     }
 }

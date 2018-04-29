@@ -14,8 +14,27 @@ namespace ActiveSelection.Test
         {
             _prices = new Dictionary<string, Money>();
 
-            CurrencyConverter.ConvertionRates.Clear();
-            CurrencyConverter.ConvertionRates[Tuple.Create(Dollars, Rubles)] = 2.0M;
+            CurrencyConverter.ClearRates();
+            CurrencyConverter.One(Dollars).Costs(2.Rubles());
+        }
+
+        [Fact]
+        public void Constructor_NegativeMoney()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Portfolio(
+                (-10).Dollars(),
+                new AssetSize("AGG", 3)
+            ));
+        }
+
+        [Fact]
+        public void Constructor_SameTickers()
+        {
+            Assert.Throws<ArgumentException>(() => new Portfolio(
+                0.Dollars(),
+                new AssetSize("AGG", 3),
+                new AssetSize("AGG", 4)
+            ));
         }
 
         [Fact]
@@ -31,7 +50,7 @@ namespace ActiveSelection.Test
         {
             _prices["AGG"] = 3.Rubles();
 
-            var portfolio = new Portfolio(10.Rubles(), new Asset("AGG", 3));
+            var portfolio = new Portfolio(10.Rubles(), new AssetSize("AGG", 3));
 
             Assert.Equal(19.Rubles(), portfolio.Cost(_prices).As(Rubles));
         }
@@ -42,7 +61,7 @@ namespace ActiveSelection.Test
             _prices["AGG"] = 3.Rubles();
             _prices["VTT"] = 2.Dollars();
 
-            var portfolio = new Portfolio(10.Rubles(), new Asset("AGG", 3), new Asset("VTT", 5));
+            var portfolio = new Portfolio(10.Rubles(), new AssetSize("AGG", 3), new AssetSize("VTT", 5));
 
             Assert.Equal(39.Rubles(), portfolio.Cost(_prices).As(Rubles));
         }

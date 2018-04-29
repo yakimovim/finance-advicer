@@ -79,6 +79,49 @@ namespace ActiveSelection
 
             return new Money(x.Value - newYValue, x.Currency);
         }
+
+        public static bool operator <(Money x, Money y)
+        {
+            var newYValue = CurrencyConverter.Convert(y.Value).From(y.Currency).To(x.Currency);
+
+            return x.Value < newYValue;
+        }
+
+        public static bool operator >(Money x, Money y)
+        {
+            var newYValue = CurrencyConverter.Convert(y.Value).From(y.Currency).To(x.Currency);
+
+            return x.Value > newYValue;
+        }
+
+        public static bool operator <=(Money x, Money y)
+        {
+            var newYValue = CurrencyConverter.Convert(y.Value).From(y.Currency).To(x.Currency);
+
+            return x.Value <= newYValue;
+        }
+
+        public static bool operator >=(Money x, Money y)
+        {
+            var newYValue = CurrencyConverter.Convert(y.Value).From(y.Currency).To(x.Currency);
+
+            return x.Value >= newYValue;
+        }
+
+        public static bool operator ==(Money x, Money y)
+        {
+            if (y == null)
+                return false;
+
+            var newYValue = CurrencyConverter.Convert(y.Value).From(y.Currency).To(x.Currency);
+
+            return x.Value == newYValue;
+        }
+
+        public static bool operator !=(Money x, Money y)
+        {
+            return !(x == y);
+        }
     }
 
     public enum Currency
