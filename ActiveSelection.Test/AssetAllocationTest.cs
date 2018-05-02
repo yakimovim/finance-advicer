@@ -82,5 +82,44 @@ namespace ActiveSelection.Test
             Assert.Equal("VTT", assetSize.Ticker);
             Assert.Equal(3, assetSize.Size);
         }
+
+        [Fact]
+        public void Remove_ExistingTicker()
+        {
+            var allocation = new AssetAllocation(
+                new AssetPortion("AGG", 0.55M),
+                new AssetPortion("VTT", 0.45M));
+
+            allocation = allocation.Remove("AGG");
+
+            Assert.Equal(1, allocation.Portions.Count);
+            Assert.Equal("VTT", allocation.Portions[0].Ticker);
+            Assert.Equal(1.0M, allocation.Portions[0].Portion);
+        }
+
+        [Fact]
+        public void Remove_UnknownTicker()
+        {
+            var allocation = new AssetAllocation(
+                new AssetPortion("AGG", 0.55M),
+                new AssetPortion("VTT", 0.45M));
+
+            allocation = allocation.Remove("UTR");
+
+            Assert.Equal(2, allocation.Portions.Count);
+        }
+
+        [Fact]
+        public void Remove_All()
+        {
+            var allocation = new AssetAllocation(
+                new AssetPortion("AGG", 0.55M),
+                new AssetPortion("VTT", 0.45M));
+
+            allocation = allocation.Remove("VTT");
+            allocation = allocation.Remove("AGG");
+
+            Assert.Equal(0, allocation.Portions.Count);
+        }
     }
 }

@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionsProviderTest.cs" />
     <Compile Include="AssetAllocationTest.cs" />
     <Compile Include="MoneyTest.cs" />
     <Compile Include="PortfolioTest.cs" />

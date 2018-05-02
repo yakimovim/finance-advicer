@@ -27,7 +27,7 @@ namespace ActiveSelection
         public AssetAllocation Remove(string ticker)
         {
             if (ticker == null) throw new ArgumentNullException(nameof(ticker));
-            var newPortions = Portions.Where(p => p.Ticker == ticker).ToList();
+            var newPortions = Portions.Where(p => p.Ticker != ticker).ToList();
             var total = newPortions.Select(p => p.Portion).Sum();
             return new AssetAllocation(newPortions.Select(p => new AssetPortion(p.Ticker, p.Portion / total)).ToArray());
         }
