@@ -15,8 +15,10 @@ namespace ActiveSelection
 
         public AssetAllocation(params AssetPortion[] portions)
         {
+            const decimal tolerance = 0.001M;
+
             Portions = portions ?? throw new ArgumentNullException(nameof(portions));
-            if(Portions.Count > 0 && Portions.Select(p => p.Portion).Sum() != 1.0M)
+            if(Portions.Count > 0 && Math.Abs(Portions.Select(p => p.Portion).Sum() - 1.0M) > tolerance)
                 throw new ArgumentException("Sum of all portions must be 1.");
             if(Portions.Count > 0 && Portions.Select(p => p.Ticker).Distinct().Count() != Portions.Count)
                 throw new ArgumentException("All tickers must be different.");

@@ -19,6 +19,11 @@ namespace ActiveSelection
             yield return Currency;
         }
 
+        public override string ToString()
+        {
+            return $"{Value} {Currency}";
+        }
+
         public Money As(Currency currency)
         {
             if (currency == Currency)
